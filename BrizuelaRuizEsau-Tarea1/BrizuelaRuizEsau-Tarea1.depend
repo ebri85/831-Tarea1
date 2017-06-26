@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
-1498387930 source:/mnt/2f2dfa39-718c-473d-812f-c6849c15048a/GITRepos/831-Tarea1/BrizuelaRuizEsau-Tarea1/main.cpp
+1498453918 source:/mnt/2f2dfa39-718c-473d-812f-c6849c15048a/GITRepos/831-Tarea1/BrizuelaRuizEsau-Tarea1/main.cpp
 	<iostream>
-	<string>
+	<string.h>
 	<time.h>
 	<stdlib.h>
 

@@ -1,13 +1,14 @@
 #include <iostream>
-#include <string>
+#include <string.h>
 #include <time.h>
 #include <stdlib.h>
 
 using namespace std;
 
-int menu();
 
-const int TAMANO = 4;
+int dim = 15;
+
+
 
 
 struct Jugador{
@@ -16,133 +17,170 @@ struct Jugador{
     int total;
 };
 
-Jugador jugadores[TAMANO];
 
 
-int puntos[6] = {10,5,4,3,2,1};
+    int menu();
+    void JugadorNuevo(Jugador j[]);
+    void Partida(Jugador[]);
 
-
-Jugador JugadorNuevo(int[]);
-void Partida(Jugador[]);
-int Aleatorio();
-void AgregaJugador(Jugador[]);
-void ModficaTamanoJugadores(Jugador []);
-void MuestraGanador(Jugador[]);
-void Resultados(Jugador[]);
+    void AgregaJugador(Jugador[],int []);
+    void ModficaTamanoJugadores(Jugador [],int *);
+    void MuestraGanador(Jugador[]);
+    void Resultados(Jugador[]);
 
 
 
 int main()
 {
 menu();
+Jugador jugadores[dim];
 
-int tam = (sizeof(jugadores)/sizeof(Jugador));
+//
+//ptrPuntos = puntos;
 
-cout<<tam<<endl;
 
-ModficaTamanoJugadores(jugadores);
+int totales[dim];
 
-int ta = (sizeof(jugadores)/sizeof(Jugador));
-cout<<ta<<endl;
-}
+
+
+
+int op= 0;
+    do {
+
+        cout<<menu()<<endl;
+
+        cin>>op;
+        int item = 0;
+        char opcion;
+
+        switch (op){
+
+            case 1:
+
+
+                JugadorNuevo(jugadores);
+
+
+
+                break;
+
+            case 0:
+
+                return 0;
+
+
+            break;
+
+            default :
+
+            break;
+
+
+
+        }
+
+
+
+
+        }while(op!='0');
+    }
 
 
 int menu(){ //Metodo encargado de Mostrar el de Menu en Consola
 
-    int resultado = 0;
+    int resultado=0;
 
     string menu = "Control de Puntaje\n";
-    menu+= "1 - Inicio de Jornada \n";
-    menu+= "2 - Cerrar Partida \n";
+    menu+= "1 - Inicio de Partida \n";
     menu+= "0 - SALIR\n\n";
 
     cout<<menu<<endl;
+
 
 return resultado;
 //Fin de Metodo Menu
 }
 
-Jugador JugadorNuevo(int pts[]){ /*Metodo pasa por referencia el Jugador y genera sus valores de juego*/
-    Jugador j;
-    cout <<"Digite el nombre del Jugador"<<endl;
-        cin >>j.nombre;
+void JugadorNuevo(Jugador j[]){ /*Metodo que generar un Jugador nuevo y lo agrega al Arreglo de Jugadores*/
+    int puntos[6] = {10,5,4,3,2,1};
 
+    int tam = sizeof(*j)/sizeof(Jugador);
+    int pos;
     int num = 0;
+    int cont=0;
+    char op;
+    string Ganador;
 
-    for (int i=0;i<=TAMANO; i++){
+        do{
+        pos = (j[cont].nombre=="")?cont:0;
 
-        num = Aleatorio();
-        j.intento[i] = pts[num];
-        j.total+=j.intento[i];
-
-    }
-
-    return j;
-
-}
-
-int Aleatorio(){
-
-    srand(time(0));
-
-    int resultado;
-
-    resultado = rand()%6;
-
-return resultado;
-
-}
-
-void AgregaJugador(Jugador js[]){
-
-string nombre;
-int tam = (sizeof(js)/sizeof(Jugador));
-
-    cout<<"Digite el nombre del jugador?"<<endl;
-        cin>>nombre;
-
-   for(int i=0;i<=tam;i++){
-        if(js[i].nombre==nombre){
-
-           cout<<"El Jugador " + nombre + " ya jugo"<<endl;
+        if(pos!=0){
+            string nombre="";
 
 
-        }else {
+                cout<<"Digite el nombre del jugador?"<<endl;
+                    cin>>nombre;
+            j[pos].nombre = nombre;
 
-            js[i]=JugadorNuevo(puntos);
+    for (int i=0;i<=6; i++){
+        srand(time(0));
+
+        num = rand()%6;
+
+        j[pos].intento[i]= puntos[num];
+
+
+
+        j[pos].total+=j[pos].intento[i];
+
+       // Ganador = (j[pos].total>j[++pos].total)?j[pos].nombre:"perdedor";
+            }
+
 
         }
 
-   }
-}
 
+        cont++;
+        cout<<"Desear agregar otro Jugador?||'s'/'n'||"<<endl;
+        cin>>op;
+        }while ((cont<=tam)||(op!='n'));
 
-void ModficaTamanoJugadores(Jugador j[]){
-
-    int tam = (sizeof(j)/sizeof(Jugador));
-
-
-    Jugador tempJug[tam];
-
-    for(int i=0; i<=tam;i++){
-
-        tempJug[i] = j[i];
 
     }
 
-        //delete[] j;
-        tam+= 2;
-
-    //Jugador j[tam];
-
-    for(int k =0; k<=tam;k++){
 
 
-        j[k] = tempJug[k];
+
+
+
+void Resultados(Jugador js[]){//Metodo que evalua el puntaje mayor y muestra el ganador
+
+int tam = (sizeof(*js)/sizeof(Jugador));
+int i=0;
+string Ganador;
+int ptosGanador = 0;
+    do {
+        if((js[i].total>js[++i].total)&& (js[i].total >30)){
+
+            Ganador = js[i].nombre;
+            ptosGanador = js[i].total;
+
+            } else{
+              cout<<"Lo siento no hay ganador"<<endl;
+
+             }
+       i++;
+
+
+
+      }while(i<=tam);
+
+ cout<<"El Ganador es "<< Ganador <<" con " <<ptosGanador<<"puntos"<<endl;
 
     }
 
-}
+
+
 
 
 
